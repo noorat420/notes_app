@@ -1,15 +1,4 @@
-let notes =[{
-  id: "01/12/2026",
-  title: "Basics of Web development",
-  content: "Web development is the process of building websites and web applications that run on the internet. It has two main sides",
-},
-{
- id: "01/02/2026",
-  title: "Basics of Git",
-  content: "Web development is the process of building websites and web applications that run on the internet. It has two main sides",
-},
-
-];
+let notes =[];
 // GET → fetch all notes
 export async function GET() {
   return new Response(JSON.stringify(notes), {
