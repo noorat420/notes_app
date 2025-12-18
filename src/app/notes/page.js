@@ -1,28 +1,29 @@
-'use client'
-import React from 'react'
+'use client';
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-export default function notes() {
-
+export default function Notes() {
   const [notes, setNotes] = useState([]);
 
+  // Fetch notes
   const fetchNotes = async () => {
     try {
-      const res = await fetch("/api/notes");
+      const res = await fetch('/api/notes');
       const data = await res.json();
       setNotes(data);
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error(err);
     }
   };
 
+  // Delete note
   const deleteNote = async (id) => {
-    await fetch("/api/notes", {
-      method: "DELETE",
+    await fetch('/api/notes', {
+      method: 'DELETE',
       body: JSON.stringify({ id }),
     });
-    fetchNotes(); // refresh list
+    fetchNotes();
   };
 
   useEffect(() => {
@@ -31,27 +32,36 @@ export default function notes() {
 
   return (
     <div className="site-shell">
+      {/* Header */}
       <header className="site-header">
-        <div className="brand">Scribbly<span style={{color:'var(--orange)'}}></span></div>
+        <div className="brand">Scribbly</div>
         <nav>
-          <Link href="/notes/add" className="btn btn-outline-secondary me-2">Try for Free</Link>
-          <Link href="#" className="btn btn-sm btn-light">Log in</Link>
+          <Link href="/notes/add" className="btn btn-outline-secondary me-2">
+            Add Note
+          </Link>
+          <Link href="/" className="btn btn-sm btn-light">
+            Home
+          </Link>
         </nav>
       </header>
 
+      {/* Main */}
       <main className="container py-5">
         <div className="text-center mb-4">
-          <h1 className="fw-bold" style={{color:'#3a2a1f'}}>All Notes</h1>
+          <h1 className="fw-bold" style={{ color: '#3a2a1f' }}>
+            All Notes
+          </h1>
           <div className="mt-3">
             <Link href="/notes/add" className="text-decoration-none">
-              <button className="btn-cta">Add Note</button>
+              <button className="btn-cta">➕ Add Note</button>
             </Link>
           </div>
         </div>
 
+        {/* Empty state */}
         {notes.length === 0 ? (
-          <div className="alert alert-info text-center" role="alert">
-            No notes yet. Click <strong> Add Note</strong> to get started!
+          <div className="alert alert-info text-center">
+            No notes yet. Click <strong>Add Note</strong> to get started!
           </div>
         ) : (
           <div className="row">
@@ -62,10 +72,19 @@ export default function notes() {
                     <h5 className="fw-bold">{note.title}</h5>
                     <p className="text-muted">{note.content}</p>
                   </div>
-                  <div className="d-flex justify-content-end mt-3">
+
+                  {/* Actions */}
+                  <div className="d-flex justify-content-end gap-2 mt-3">
+                    <Link
+                      href={`/notes/edit/${note.id}`}
+                      className="btn btn-sm btn-outline-secondary rounded-pill px-3"
+                    >
+                      ✏️ Edit
+                    </Link>
+
                     <button
                       onClick={() => deleteNote(note.id)}
-                      className="btn btn-sm btn-danger rounded-pill"
+                      className="btn btn-sm btn-outline-danger rounded-pill px-3"
                     >
                       🗑️ Delete
                     </button>
@@ -77,6 +96,7 @@ export default function notes() {
         )}
       </main>
 
+      {/* Footer cards */}
       <section className="feature-cards">
         <div className="note-card">
           <h5>Write Notes</h5>
@@ -92,5 +112,5 @@ export default function notes() {
         </div>
       </section>
     </div>
-  )
+  );
 }
