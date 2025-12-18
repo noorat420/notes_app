@@ -1,6 +1,8 @@
 # 📝 Scribbly – Simple Notes App
 
 Scribbly is a clean and minimal note-taking web application built to help users capture ideas, plan their day, and organize thoughts effortlessly. Designed with a focus on simplicity, readability, and a pleasant writing experience.
+This app uses an in-memory global store for learning CRUD operations.
+Data resets when the server restarts. Can be extended to a database.
 
 ---
 
